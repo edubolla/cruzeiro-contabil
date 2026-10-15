@@ -20,6 +20,9 @@
   <link rel="preload" as="image" href="assets/img/fernando-avatar.webp">
   <link rel="stylesheet" href="assets/css/styles.css">
 
+  <!-- Google Tag Manager + eventos (ID do contêiner em assets/js/tracking.js) -->
+  <script src="assets/js/tracking.js"></script>
+
   <!-- Meta Pixel -->
   <script>
     !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -33,6 +36,9 @@
   <noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1113165961095884&ev=PageView&noscript=1"></noscript>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) — descomente e troque GTM-XXXXXXX pelo ID do contêiner
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  -->
 
   <!-- SVG icon sprite -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -63,7 +69,7 @@
       <nav class="nav" aria-label="Principal">
         <a href="https://www.cruzeirocontabil.com.br/" target="_blank" rel="noopener">Site</a>
         <a href="https://cruzeirocontabil.com.br/blog" target="_blank" rel="noopener">Blog</a>
-        <a class="btn btn-ghost" href="https://wa.me/5551991170098" target="_blank" rel="noopener">
+        <a class="btn btn-ghost" data-track-local="header" href="https://wa.me/5551991170098" target="_blank" rel="noopener">
           <svg aria-hidden="true"><use href="#i-whats"/></svg>
           <span class="label-long">Converse no WhatsApp</span><span class="label-short">WhatsApp</span>
         </a>
@@ -255,7 +261,7 @@
           <h3>Convide seus fornecedores e outras empresas</h3>
           <p>Quanto mais alinhados estiverem, melhor poderão se preparar para as mudanças. Inscreva-se e compartilhe este convite.</p>
           <div class="invite-actions">
-            <a class="btn btn-whats" data-share="whatsapp" href="https://wa.me/?text=Reforma%20Tribut%C3%A1ria%3A%20qual%20rota%20sua%20empresa%20vai%20seguir%3F%20Trilha%20de%20webinars%20gratuita%20da%20Cruzeiro%20Contabilidade." target="_blank" rel="noopener">
+            <a class="btn btn-whats" data-share="whatsapp" data-track-local="lp_convite" href="https://wa.me/?text=Reforma%20Tribut%C3%A1ria%3A%20qual%20rota%20sua%20empresa%20vai%20seguir%3F%20Trilha%20de%20webinars%20gratuita%20da%20Cruzeiro%20Contabilidade." target="_blank" rel="noopener">
               <svg aria-hidden="true"><use href="#i-whats"/></svg>Compartilhar no WhatsApp
             </a>
             <button class="btn btn-ghost" type="button" data-share="copy">
@@ -290,7 +296,7 @@
         <nav class="social" aria-label="Redes sociais">
           <a href="https://www.instagram.com/cruzeiro.contabilidade.digital/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-insta"/></svg></a>
           <a href="https://www.linkedin.com/company/cruzeiro-contabilidade-digital-caxias" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-linkedin"/></svg></a>
-          <a href="https://wa.me/5551991170098" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-whats"/></svg></a>
+          <a data-track-local="rodape" href="https://wa.me/5551991170098" target="_blank" rel="noopener" aria-label="WhatsApp"><svg><use href="#i-whats"/></svg></a>
           <a href="https://www.cruzeirocontabil.com.br/" target="_blank" rel="noopener" aria-label="Site"><svg><use href="#i-globe"/></svg></a>
         </nav>
       </div>
