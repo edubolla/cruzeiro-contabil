@@ -8,7 +8,7 @@
 (function () {
   var PIPERUN = {
     // Hash da etapa do funil onde o lead deve entrar (obrigatório para ativar o JSON).
-    stageHash: "",
+    stageHash: "70b994aa-a208-4906-9de2-2982127ce713",
     // E-mail do usuário dono da oportunidade. Vazio = sem dono (use a distribuição da etapa).
     owner: "",
     // Tags da oportunidade (são criadas automaticamente se não existirem).
