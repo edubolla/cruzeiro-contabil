@@ -13,7 +13,7 @@
     owner: "",
     // Tags da oportunidade (são criadas automaticamente se não existirem).
     tags: ["Rota Tributária 2027"],
-    // Origem da oportunidade.
+    // Origem da oportunidade quando a visita chega sem utm_source (com UTM, vale a utm_source).
     source: "LP Rota Tributária",
     // Prefixo do título da oportunidade; o nome da pessoa é adicionado no final.
     titlePrefix: "Rota Tributária 2027 · ",
@@ -99,7 +99,7 @@
       email: email,
       mobile_phone: whats,
       person_phone_main: whats,
-      last_conversion: { source: PIPERUN.source },
+      last_conversion: { source: utms.utm_source || PIPERUN.source }, // UTM do anúncio tem prioridade
       custom_fields: custom,
       tags: PIPERUN.tags,
       notes: [

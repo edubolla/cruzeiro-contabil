@@ -15,7 +15,7 @@ Tudo fica em `assets/js/piperun.js`, no bloco `PIPERUN` do topo:
 | `stageHash` | Hash da etapa do funil onde o lead entra. **Vazio = usa o envio antigo** do Pipe.run (LP da lpage.run) |
 | `owner` | E-mail do dono da oportunidade. Vazio = sem dono (use a distribuição da etapa) |
 | `tags` | Tags da oportunidade (criadas automaticamente se não existirem) |
-| `source` | Origem da oportunidade |
+| `source` | Origem da oportunidade quando não há `utm_source`. Com UTM, a origem é o valor de `utm_source` (ex.: `meta`) |
 | `titlePrefix` | Prefixo do título; o nome da pessoa vai no final |
 | `redirectUrl` | Página após inscrição aceita (`obrigado.html`) |
 
