@@ -6,6 +6,7 @@
  *   clique_whatsapp        clique em qualquer link de contato no WhatsApp da Cruzeiro
  *   compartilhar_whatsapp  clique em "Compartilhar no WhatsApp" (convite para parceiros)
  *   copiar_link_convite    clique em "Copiar link do convite"
+ *   assistir_gravacao      clique para assistir à gravação de um encontro (YouTube)
  *   generate_lead          inscrição aceita pelo Pipe.run (disparado na página de obrigado)
  *
  * Este arquivo precisa ser carregado ANTES de assets/js/piperun.js.
@@ -36,6 +37,11 @@
     var el = event.target.closest && event.target.closest("a, button");
     if (!el) return;
     var local = el.getAttribute("data-track-local") || "nao_informado";
+
+    if (el.getAttribute("data-track-event") === "assistir_gravacao") {
+      push({ event: "assistir_gravacao", encontro: el.getAttribute("data-track-encontro") || "", link_url: el.getAttribute("href") || "", pagina: location.pathname });
+      return;
+    }
 
     if (el.getAttribute("data-share") === "whatsapp") {
       push({ event: "compartilhar_whatsapp", whatsapp_local: local, pagina: location.pathname });

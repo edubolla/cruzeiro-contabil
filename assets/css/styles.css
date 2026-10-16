@@ -433,8 +433,41 @@ p { margin: 0; }
 .badge-next { background: var(--sky-100); color: var(--blue-600); }
 .badge-done { background: #eef1f5; color: var(--muted); }
 .step.is-next { border-color: var(--sky-400); box-shadow: 0 0 0 4px rgba(68, 186, 212, .14), var(--shadow); }
-.step.is-done { opacity: .72; }
+.step.is-done > :not(.step-recording) { opacity: .72; }
 .step.is-done .step-date { background: #8796ac; }
+.badge-recorded { background: #fdecec; color: #c4302b; }
+.step.has-recording { border-color: #f3c9c7; }
+.step-recording { margin-top: auto; }
+.step.has-recording p:last-of-type { margin-bottom: 20px; }
+
+.btn-youtube { background: #ff0000; color: #fff; box-shadow: 0 8px 20px rgba(255, 0, 0, .22); }
+.btn-youtube:hover { background: #e00000; }
+
+/* Aviso de gravação na hero */
+.replay {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 20px; padding: 14px 16px;
+  border-radius: 14px; text-decoration: none; color: #fff;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .18);
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.replay:hover { background: rgba(255, 255, 255, .12); border-color: rgba(255, 255, 255, .3); }
+.replay svg {
+  width: 40px; height: 40px; flex: none; padding: 9px; border-radius: 12px;
+  background: #ff0000; color: #fff;
+}
+.replay-text { font-size: 14px; line-height: 1.4; color: #c9d6ea; }
+.replay-text strong { display: block; color: #fff; font-size: 15px; }
+.replay-cta { display: none; }
+@media (min-width: 768px) {
+  .replay { margin-top: 28px; padding: 14px 18px; }
+  .replay-cta {
+    display: inline-flex; margin-left: auto; flex: none;
+    padding: 8px 14px; border-radius: 10px; background: #fff; color: var(--navy-800);
+    font-size: 14px; font-weight: 700;
+  }
+}
 
 .timeline-cta { display: flex; justify-content: center; margin-top: 32px; }
 .timeline-cta .btn { width: 100%; }
@@ -620,6 +653,8 @@ p { margin: 0; }
 .cal-list a:hover { border-color: var(--blue-600); background: var(--sky-100); }
 .cal-list a span { color: var(--blue-600); font-size: 13px; white-space: nowrap; }
 .cal-list a.is-done { pointer-events: none; opacity: .5; }
+.cal-list a.is-recording { border-color: #f3c9c7; }
+.cal-list a.is-recording span { color: #c4302b; font-weight: 700; }
 
 .meanwhile { margin-top: 44px; text-align: center; }
 .meanwhile h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
