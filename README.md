@@ -6,11 +6,26 @@ Landing page da trilha de webinars **"Reforma Tributária: qual rota sua empresa
 - `obrigado.html` — página pós-inscrição
 - `assets/` — CSS, JS e imagens
 
-## Formulário (Pipe.run)
+## Formulário → CRM Pipe.run (integração via JSON)
 
-O formulário continua enviando para o mesmo funil do Pipe.run (hash `4ks7o30fd8cgo0cggs4ccoockgok44k`), via `submitter.js` oficial.
-Os campos `person_name`, `person_email`, `person_phone`, `privacy_policy` e `anti_spam` **não devem ser renomeados**.
-Após o envio, o usuário é redirecionado para `obrigado.html` (ajuste `redirectUrl` no fim do `index.html` se a URL final mudar).
+Tudo fica em `assets/js/piperun.js`, no bloco `PIPERUN` do topo:
+
+| Campo | O que é |
+|---|---|
+| `stageHash` | Hash da etapa do funil onde o lead entra. **Vazio = usa o envio antigo** do Pipe.run (LP da lpage.run) |
+| `owner` | E-mail do dono da oportunidade. Vazio = sem dono (use a distribuição da etapa) |
+| `tags` | Tags da oportunidade (criadas automaticamente se não existirem) |
+| `source` | Origem da oportunidade |
+| `titlePrefix` | Prefixo do título; o nome da pessoa vai no final |
+| `redirectUrl` | Página após inscrição aceita (`obrigado.html`) |
+
+O que vai para o Pipe.run em cada inscrição:
+- nome, e-mail (em minúsculas) e WhatsApp (`mobile_phone` e `person_phone_main`);
+- `id` = e-mail, com `update: true` e `equal_pipeline: true`: se a pessoa se inscrever de novo, a oportunidade aberta no mesmo funil é atualizada em vez de duplicada;
+- campos personalizados: página de conversão e UTMs (`utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `gclid`, `fbclid`), guardadas na sessão;
+- nota com os dados, o aceite da política (com data e hora) e as UTMs.
+
+O envio só acontece depois da validação do navegador (campos obrigatórios, e-mail, WhatsApp com DDD e aceite). Se o Pipe.run recusar ou a conexão falhar, aparece uma mensagem no formulário e a pessoa pode tentar de novo; nesse caso não há redirecionamento nem evento de lead.
 
 ## Google Tag Manager e eventos
 
@@ -27,7 +42,7 @@ Tudo fica em `assets/js/tracking.js`.
 | `copiar_link_convite` | clique em "Copiar link do convite" | `pagina` |
 | `generate_lead` | inscrição **aceita pelo Pipe.run** (dispara na página de obrigado, uma única vez) | `form_id`, `form_origem` |
 
-**Como o `generate_lead` garante que o envio foi válido:** a validação do navegador (campos obrigatórios, e-mail, aceite da política) barra envios incompletos antes de chegar ao Pipe.run. Depois, o `tracking.js` observa a resposta da API do Pipe.run e só marca o lead se ela vier com sucesso (`response.ok`). O evento é disparado na `obrigado.html`, onde o GTM carrega por completo. Acesso direto ou recarregar a página de obrigado não gera lead.
+**Como o `generate_lead` garante que o envio foi válido:** a validação do navegador (campos obrigatórios, e-mail, aceite da política) barra envios incompletos antes de chegar ao Pipe.run. Depois, o `piperun.js` só marca o lead quando o Pipe.run responde com sucesso (no envio antigo, o `tracking.js` observa a resposta da API). O evento é disparado na `obrigado.html`, onde o GTM carrega por completo. Acesso direto ou recarregar a página de obrigado não gera lead.
 
 Novo link de WhatsApp? Basta usar `href="https://wa.me/..."` e, de preferência, `data-track-local="nome_do_local"`.
 

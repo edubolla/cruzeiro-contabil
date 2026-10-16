@@ -318,6 +318,11 @@ p { margin: 0; }
   width: 22px; height: 22px; margin: 0; flex: none;
   accent-color: var(--blue-600); cursor: pointer;
 }
+.form-error {
+  margin: -6px 0 16px; padding: 12px 14px; border-radius: 10px;
+  background: var(--danger-100); color: #a3242f; font-size: 14px; font-weight: 600; line-height: 1.45;
+}
+.form-error[hidden] { display: none; }
 .form-note {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   margin-top: 12px; font-size: 13px; color: var(--muted);

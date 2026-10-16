@@ -127,6 +127,7 @@
               <input id="f-privacidade" name="privacy_policy" type="checkbox" required>
               <span>Concordo com a <a href="https://cruzeirocontabil.com.br/lgpd" target="_blank" rel="noopener">Política de Privacidade</a> e em receber contato por e-mail e WhatsApp sobre os encontros.</span>
             </label>
+            <p class="form-error" role="alert" hidden></p>
             <button class="btn btn-primary btn-block" type="submit" name="submit" value="Quero participar da rota tributária">Quero participar da rota tributária</button>
             <p class="form-note"><svg aria-hidden="true"><use href="#i-lock"/></svg>Seus dados estão seguros. Sem spam.</p>
           </form>
@@ -313,31 +314,7 @@
 
   <script src="assets/js/main.js"></script>
 
-  <!-- Pipe.run: envio do formulário para o CRM -->
-  <script src="https://static.pipe.run/js/landing-page/submitter.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-  <script>
-    function initLandingPage() {
-      [
-        new LandingPageSubmitter({
-          hash: "4ks7o30fd8cgo0cggs4ccoockgok44k",
-          hasThankYouPage: true,
-          apiUrl: "https://api.pipe.run",
-          successMessage: null,
-          redirectUrl: "obrigado.html",
-          redirectTarget: 0,
-          customFields: []
-        }),
-        new LandingPageHelpers(),
-        new LandingPagePhoneInput()
-      ].forEach(function (s) { s.init(); });
-    }
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initLandingPage);
-    } else {
-      initLandingPage();
-    }
-  </script>
+  <!-- Pipe.run: envio do formulário para o CRM (configuração no topo do arquivo) -->
+  <script src="assets/js/piperun.js"></script>
 </body>
 </html>

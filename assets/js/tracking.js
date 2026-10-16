@@ -8,7 +8,7 @@
  *   copiar_link_convite    clique em "Copiar link do convite"
  *   generate_lead          inscrição aceita pelo Pipe.run (disparado na página de obrigado)
  *
- * Este arquivo precisa ser carregado ANTES do submitter.js do Pipe.run.
+ * Este arquivo precisa ser carregado ANTES de assets/js/piperun.js.
  */
 (function () {
   // ---------- Google Tag Manager ----------
@@ -52,28 +52,31 @@
   }, true);
 
   // ---------- Lead: só quando o Pipe.run confirma o envio ----------
-  // O submitter.js do Pipe.run envia o formulário via fetch e, se a resposta for OK,
-  // redireciona para obrigado.html. Observamos essa resposta: só com response.ok
-  // marcamos a inscrição como válida. Erro de validação, erro da API ou falha de rede
-  // não geram evento. O evento em si é disparado na página de obrigado, que carrega
-  // o GTM inteiro — assim a tag não se perde no meio do redirecionamento.
+  // O formulário só marca a inscrição como válida quando o Pipe.run responde com
+  // sucesso. Erro de validação, erro da API ou falha de rede não geram evento.
+  // O evento em si é disparado na página de obrigado, que carrega o GTM inteiro —
+  // assim a tag não se perde no meio do redirecionamento.
+  // Chamado pelo envio do formulário quando o Pipe.run aceita a inscrição.
+  window.cruzeiroMarkLead = function (info) {
+    var payload = { form_id: (info && info.form_id) || "rota_tributaria", origem: location.pathname, ts: Date.now() };
+    try {
+      sessionStorage.setItem(LEAD_FLAG, JSON.stringify(payload));
+    } catch (e) {
+      // Sem sessionStorage (navegação privada restrita): dispara aqui mesmo.
+      push({ event: "generate_lead", form_id: payload.form_id, form_origem: payload.origem });
+    }
+  };
+
+  // Envio antigo do Pipe.run (submitter.js, usado enquanto o JSON não está ativo):
+  // ele não avisa quando dá certo, então observamos a resposta da API.
   if (window.fetch) {
     var originalFetch = window.fetch;
     window.fetch = function (input, init) {
       var url = typeof input === "string" ? input : (input && input.url) || "";
       var promise = originalFetch.apply(this, arguments);
       if (url.indexOf(PIPERUN_INGEST) === -1) return promise;
-
       return promise.then(function (response) {
-        if (response && response.ok) {
-          var payload = { form_id: "rota_tributaria", origem: location.pathname, ts: Date.now() };
-          try {
-            sessionStorage.setItem(LEAD_FLAG, JSON.stringify(payload));
-          } catch (e) {
-            // Sem sessionStorage (navegação privada restrita): dispara aqui mesmo.
-            push({ event: "generate_lead", form_id: payload.form_id, form_origem: payload.origem });
-          }
-        }
+        if (response && response.ok) window.cruzeiroMarkLead({ form_id: "rota_tributaria" });
         return response;
       });
     };
