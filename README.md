@@ -39,11 +39,11 @@ var GRAVACOES = {
 };
 ```
 
-Quando o encontro já passou **e** tem link:
-- o card da trilha ganha o selo "Gravação disponível" e o botão "Assistir à aula no YouTube" (de propósito, não há aviso na hero: o foco lá é a inscrição);
-- na página de obrigado, o item da agenda vira "▶ Assistir".
+A gravação **só é entregue depois da inscrição**, para não perder o lead:
+- **Home:** todo encontro que já passou mostra o botão "Faça o cadastro para assistir a essa aula", que leva ao formulário (`#inscricao`). O link do YouTube não aparece na home.
+- **Página de obrigado:** bloco "Assista às aulas que já aconteceram", com o botão "Assistir no YouTube" para cada encontro com link (sem link: "Gravação em breve"). Na agenda, o item vira "▶ Assistir".
 
-Sem link, o encontro passado aparece só como "Realizado". Para conferir o layout como se fosse outro dia, use `?simular=2026-10-21` na URL.
+Para conferir o layout como se fosse outro dia, use `?simular=2026-10-21` na URL.
 
 ## Google Tag Manager e eventos
 
@@ -58,7 +58,8 @@ Tudo fica em `assets/js/tracking.js`.
 | `clique_whatsapp` | clique em link de contato no WhatsApp da Cruzeiro | `whatsapp_local` (`header`, `rodape`, `obrigado_falar_equipe`), `link_url`, `pagina` |
 | `compartilhar_whatsapp` | clique em "Compartilhar no WhatsApp" (convite) | `whatsapp_local` (`lp_convite`, `obrigado_convite`), `pagina` |
 | `copiar_link_convite` | clique em "Copiar link do convite" | `pagina` |
-| `assistir_gravacao` | clique para assistir à gravação de um encontro | `encontro` (1, 2, 3), `link_url`, `pagina` |
+| `cadastro_para_assistir` | clique em "Faça o cadastro para assistir a essa aula" (home) | `encontro` (1, 2, 3), `link_url`, `pagina` |
+| `assistir_gravacao` | clique para assistir à gravação de um encontro (página de obrigado) | `encontro` (1, 2, 3), `link_url`, `pagina` |
 | `generate_lead` | inscrição **aceita pelo Pipe.run** (dispara na página de obrigado, uma única vez) | `form_id`, `form_origem` |
 
 **Como o `generate_lead` garante que o envio foi válido:** a validação do navegador (campos obrigatórios, e-mail, aceite da política) barra envios incompletos antes de chegar ao Pipe.run. Depois, o `piperun.js` só marca o lead quando o Pipe.run responde com sucesso (no envio antigo, o `tracking.js` observa a resposta da API). O evento é disparado na `obrigado.html`, onde o GTM carrega por completo. Acesso direto ou recarregar a página de obrigado não gera lead.

@@ -3,7 +3,8 @@
   document.documentElement.classList.remove("no-js");
 
   // ---------- Gravações dos encontros ----------
-  // Cole o link do YouTube de cada encontro já realizado. Vazio = sem botão de gravação.
+  // Cole o link do YouTube de cada encontro já realizado. Os links só aparecem na
+  // página de obrigado; na home, as aulas passadas levam ao formulário.
   var GRAVACOES = {
     "2026-10-13": "", // Encontro 1 · Entenda antes de escolher
     "2026-10-20": "", // Encontro 2 · Veja o que os números revelam
@@ -32,7 +33,14 @@
   // ?simular=AAAA-MM-DD permite conferir o layout como se fosse outra data
   if (/^\d{4}-\d{2}-\d{2}$/.test(params.get("simular") || "")) now = new Date(params.get("simular") + "T15:00:00-03:00");
 
-  // Linha do tempo: marca encontros realizados (com gravação, se houver) e o próximo
+  var TITULOS = {
+    "2026-10-13": "Entenda antes de escolher",
+    "2026-10-20": "Veja o que os números revelam",
+    "2026-10-27": "Tire suas dúvidas com o especialista"
+  };
+
+  // Linha do tempo (home): encontros realizados levam ao cadastro — a gravação
+  // só é entregue na página de obrigado, depois da inscrição.
   var steps = document.querySelectorAll(".step[data-date]");
   var nextMarked = false;
   steps.forEach(function (step) {
@@ -44,14 +52,14 @@
       badge.className = "badge badge-done";
       badge.textContent = "Realizado";
       top.appendChild(badge);
-      if (GRAVACOES[date]) {
-        step.classList.add("has-recording");
-        badge.className = "badge badge-recorded";
-        badge.textContent = "Gravação disponível";
-        var time = step.querySelector(".step-time");
-        var btn = recordingLink(date, "btn btn-youtube btn-block step-recording", "Assistir à aula no YouTube");
-        if (time) time.replaceWith(btn); else step.appendChild(btn);
-      }
+      var cta = document.createElement("a");
+      cta.className = "btn btn-primary btn-block step-recording";
+      cta.href = "#inscricao";
+      cta.setAttribute("data-track-event", "cadastro_para_assistir");
+      cta.setAttribute("data-track-encontro", String(ENCONTRO_NUM[date] || ""));
+      cta.innerHTML = PLAY_ICON + "<span>Faça o cadastro para assistir a essa aula</span>";
+      var time = step.querySelector(".step-time");
+      if (time) time.replaceWith(cta); else step.appendChild(cta);
     } else if (!nextMarked) {
       nextMarked = true;
       step.classList.add("is-next");
@@ -60,6 +68,29 @@
       top.appendChild(badge);
     }
   });
+
+  // Página de obrigado: bloco com as aulas que já aconteceram
+  var thanksBody = document.querySelector(".thanks-body .container");
+  if (thanksBody) {
+    var past = Object.keys(ENCONTRO_NUM).filter(function (d) { return endsAt(d) < now; });
+    if (past.length) {
+      var box = document.createElement("section");
+      box.className = "recordings";
+      box.setAttribute("aria-labelledby", "gravacoes-titulo");
+      var html = '<h2 id="gravacoes-titulo">Assista às aulas que já aconteceram</h2><ul>';
+      past.forEach(function (d) {
+        html += '<li><div><span class="rec-num">Encontro ' + ENCONTRO_NUM[d] + " · " + d.slice(8, 10) + "/" + d.slice(5, 7) + "</span>" +
+          "<strong>" + TITULOS[d] + "</strong></div>" +
+          (GRAVACOES[d] ? "" : '<span class="rec-soon">Gravação em breve</span>') + "</li>";
+      });
+      box.innerHTML = html + "</ul>";
+      box.querySelectorAll("li").forEach(function (li, i) {
+        var d = past[i];
+        if (GRAVACOES[d]) li.appendChild(recordingLink(d, "btn btn-youtube", "Assistir no YouTube"));
+      });
+      thanksBody.insertBefore(box, thanksBody.firstChild);
+    }
+  }
 
   // Links de agenda (página de obrigado): encontro realizado vira link da gravação
   document.querySelectorAll(".cal-list a[data-date]").forEach(function (a) {
