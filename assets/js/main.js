@@ -35,7 +35,6 @@
   // Linha do tempo: marca encontros realizados (com gravação, se houver) e o próximo
   var steps = document.querySelectorAll(".step[data-date]");
   var nextMarked = false;
-  var recorded = [];
   steps.forEach(function (step) {
     var date = step.dataset.date;
     var top = step.querySelector(".step-top");
@@ -52,7 +51,6 @@
         var time = step.querySelector(".step-time");
         var btn = recordingLink(date, "btn btn-youtube btn-block step-recording", "Assistir à aula no YouTube");
         if (time) time.replaceWith(btn); else step.appendChild(btn);
-        recorded.push(date);
       }
     } else if (!nextMarked) {
       nextMarked = true;
@@ -62,18 +60,6 @@
       top.appendChild(badge);
     }
   });
-
-  // Hero: aviso para quem chegou depois de um encontro com gravação
-  var heroIntro = document.querySelector(".hero-intro");
-  if (heroIntro && recorded.length) {
-    var last = recorded[recorded.length - 1];
-    var n = ENCONTRO_NUM[last];
-    var replay = recordingLink(last, "replay", "");
-    replay.querySelector("span").outerHTML =
-      '<span class="replay-text"><strong>Perdeu o Encontro ' + n + '?</strong> Assista à gravação no YouTube e chegue preparado ao próximo.</span>' +
-      '<span class="replay-cta">Assistir</span>';
-    heroIntro.appendChild(replay);
-  }
 
   // Links de agenda (página de obrigado): encontro realizado vira link da gravação
   document.querySelectorAll(".cal-list a[data-date]").forEach(function (a) {

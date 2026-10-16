@@ -15,8 +15,8 @@
   // ---------- Google Tag Manager ----------
   // Cole aqui o ID do contêiner (ex.: "GTM-ABC1234"). Vazio = GTM não carrega,
   // mas os eventos continuam sendo registrados no dataLayer.
-  // Lembre de também descomentar o <noscript> do GTM logo após o <body> nas duas páginas.
-  var GTM_ID = "";
+  // O <noscript> do GTM fica logo após o <body> em index.html e obrigado.html (mesmo ID).
+  var GTM_ID = "GTM-MWCSDTBQ";
 
   window.dataLayer = window.dataLayer || [];
   function push(data) { window.dataLayer.push(data); }

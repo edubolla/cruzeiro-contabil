@@ -40,8 +40,7 @@ var GRAVACOES = {
 ```
 
 Quando o encontro já passou **e** tem link:
-- o card da trilha ganha o selo "Gravação disponível" e o botão "Assistir à aula no YouTube";
-- a hero mostra o aviso "Perdeu o Encontro N?" com link para a gravação mais recente;
+- o card da trilha ganha o selo "Gravação disponível" e o botão "Assistir à aula no YouTube" (de propósito, não há aviso na hero: o foco lá é a inscrição);
 - na página de obrigado, o item da agenda vira "▶ Assistir".
 
 Sem link, o encontro passado aparece só como "Realizado". Para conferir o layout como se fosse outro dia, use `?simular=2026-10-21` na URL.
@@ -50,8 +49,8 @@ Sem link, o encontro passado aparece só como "Realizado". Para conferir o layou
 
 Tudo fica em `assets/js/tracking.js`.
 
-1. Coloque o ID do contêiner em `GTM_ID` (ex.: `"GTM-ABC1234"`). Vazio = GTM não carrega.
-2. Descomente o `<noscript>` do GTM logo após o `<body>` em `index.html` e `obrigado.html`, trocando `GTM-XXXXXXX`.
+1. Contêiner ativo: **GTM-MWCSDTBQ** (`GTM_ID` em `tracking.js` e `<noscript>` logo após o `<body>` nas duas páginas).
+2. Ao trocar o contêiner, altere os três lugares.
 3. No GTM, crie acionadores do tipo **Evento personalizado** com os nomes abaixo.
 
 | Evento | Quando dispara | Variáveis da camada de dados |
@@ -65,6 +64,10 @@ Tudo fica em `assets/js/tracking.js`.
 **Como o `generate_lead` garante que o envio foi válido:** a validação do navegador (campos obrigatórios, e-mail, aceite da política) barra envios incompletos antes de chegar ao Pipe.run. Depois, o `piperun.js` só marca o lead quando o Pipe.run responde com sucesso (no envio antigo, o `tracking.js` observa a resposta da API). O evento é disparado na `obrigado.html`, onde o GTM carrega por completo. Acesso direto ou recarregar a página de obrigado não gera lead.
 
 Novo link de WhatsApp? Basta usar `href="https://wa.me/..."` e, de preferência, `data-track-local="nome_do_local"`.
+
+## Cache
+
+Os CSS/JS são carregados com `?v=AAAAMMDD` em `index.html` e `obrigado.html`. Ao publicar uma alteração neles, atualize esse número para os visitantes não ficarem com a versão antiga.
 
 ## Rodar localmente
 
