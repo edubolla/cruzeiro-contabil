@@ -81,7 +81,7 @@
       past.forEach(function (d) {
         html += '<li><div><span class="rec-num">Encontro ' + ENCONTRO_NUM[d] + " · " + d.slice(8, 10) + "/" + d.slice(5, 7) + "</span>" +
           "<strong>" + TITULOS[d] + "</strong></div>" +
-          (GRAVACOES[d] ? "" : '<span class="rec-soon">Gravação em breve</span>') + "</li>";
+          (GRAVACOES[d] ? "" : '<span class="btn btn-youtube rec-soon" aria-disabled="true">' + PLAY_ICON + "<span>Em breve no YouTube</span></span>") + "</li>";
       });
       box.innerHTML = html + "</ul>";
       box.querySelectorAll("li").forEach(function (li, i) {
