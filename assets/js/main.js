@@ -6,7 +6,7 @@
   // Cole o link do YouTube de cada encontro já realizado. Os links só aparecem na
   // página de obrigado; na home, as aulas passadas levam ao formulário.
   var GRAVACOES = {
-    "2026-10-13": "", // Encontro 1 · Entenda antes de escolher
+    "2026-10-13": "https://youtu.be/2KCJAfH44us", // Encontro 1 · Entenda antes de escolher
     "2026-10-20": "", // Encontro 2 · Veja o que os números revelam
     "2026-10-27": ""  // Encontro 3 · Tire suas dúvidas com o especialista
   };
